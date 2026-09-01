@@ -74,3 +74,11 @@ This document records the substantive user prompts for the current development s
 ### Frontend dashboard and employee table
 
 > where have you done these filtering and sorting part i want it to be done in the frontend part as it will hit the API whenever a filter is applied which will reduce the perfomance so keep it int he frontend part and lets start with the frontend part of dashboard and employee table
+
+### Employee table scrolling
+
+> don't commit changes also i want to add scrooling in the employee component only not the complete page scrolling reduce the employee records to 30 records
+
+### Employee table visible rows
+
+> see it is not showing any employee record at current when its 100% zoomed i want that it should show atleast 8 records then scrolling will be enables

@@ -42,5 +42,7 @@ salary-management/
 - Dashboard endpoints are isolated in `src/modules/dashboard`. Salary averages are grouped by currency instead of being combined across currencies, which avoids presenting a misleading cross-currency average; the same country, department, currency, and status filters can refine dashboard results.
 - Employee search accepts one or more terms across employee code, first name, last name, and email. Employee lists can be filtered by country, department, currency, and status; sortable fields are explicitly allowlisted and have a stable ID tie-breaker so pagination remains consistent.
 - The dashboard frontend loads the employee dataset once (up to the assessment scale of 10,000 records) and performs table search, filtering, sorting, and pagination in memory. This avoids repeated API requests as an HR Manager adjusts table controls; dashboard summaries and salary insights load once on entry.
+- The employee table presents 30 records per page and owns its vertical and horizontal scrolling, while the dashboard shell remains fixed. Sticky table headers preserve column context during employee-table scrolling.
+- The employee table reserves space for at least eight compact rows before its internal scroll area is used at standard desktop zoom.
 
 Employee Management is the only implemented product feature at this stage.

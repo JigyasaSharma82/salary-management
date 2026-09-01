@@ -5,7 +5,7 @@ type SortKey = 'employeeCode' | 'firstName' | 'department' | 'country' | 'salary
 type SortDirection = 'asc' | 'desc';
 type EmployeeTableProps = { employees: Employee[] };
 
-const PAGE_SIZE = 25;
+const PAGE_SIZE = 30;
 const searchableFields = (employee: Employee) => [employee.employeeCode, employee.firstName, employee.lastName, employee.email].join(' ').toLowerCase();
 const unique = (values: string[]) => [...new Set(values)].sort();
 
