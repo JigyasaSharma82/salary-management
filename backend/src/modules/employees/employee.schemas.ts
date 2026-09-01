@@ -26,7 +26,7 @@ export const employeeQuerySchema = z.object({
   department: z.string().trim().min(1).max(100).optional(),
   currency: currencySchema.optional(),
   status: z.enum(['ACTIVE', 'INACTIVE']).optional(),
-  sortBy: z.enum(['employeeCode', 'firstName', 'lastName', 'department', 'country', 'salary', 'createdAt']).default('lastName'),
+  sortBy: z.enum(['employeeCode', 'firstName', 'lastName', 'email', 'department', 'jobTitle', 'country', 'salary', 'createdAt', 'updatedAt']).default('lastName'),
   sortOrder: z.enum(['asc', 'desc']).default('asc'),
 });
 

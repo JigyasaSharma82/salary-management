@@ -22,16 +22,16 @@ export const buildEmployeeWhere = (query: EmployeeQuery): Prisma.EmployeeWhereIn
   ...(query.department ? { department: { equals: query.department, mode: 'insensitive' } } : {}),
   ...(query.currency ? { currency: query.currency } : {}),
   ...(query.status ? { status: query.status as EmployeeStatus } : {}),
-  ...(query.search
-    ? {
-        OR: [
-          { employeeCode: { contains: query.search, mode: 'insensitive' } },
-          { firstName: { contains: query.search, mode: 'insensitive' } },
-          { lastName: { contains: query.search, mode: 'insensitive' } },
-          { email: { contains: query.search, mode: 'insensitive' } },
-        ],
-      }
-    : {}),
+  ...(query.search ? {
+    AND: query.search.split(/\s+/).map((term) => ({
+      OR: [
+        { employeeCode: { contains: term, mode: 'insensitive' } },
+        { firstName: { contains: term, mode: 'insensitive' } },
+        { lastName: { contains: term, mode: 'insensitive' } },
+        { email: { contains: term, mode: 'insensitive' } },
+      ],
+    })),
+  } : {}),
 });
 
 export class PrismaEmployeeRepository implements EmployeeRepository {
@@ -42,7 +42,7 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
     const [data, total] = await this.db.$transaction([
       this.db.employee.findMany({
         where,
-        orderBy: { [query.sortBy]: query.sortOrder },
+        orderBy: [{ [query.sortBy]: query.sortOrder }, { id: 'asc' }],
         skip: (query.page - 1) * query.pageSize,
         take: query.pageSize,
       }),

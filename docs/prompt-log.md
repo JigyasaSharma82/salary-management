@@ -66,3 +66,7 @@ This document records the substantive user prompts for the current development s
 ### Dashboard and salary insights API
 
 > ok all the APIs are working fine now i want you to create the dashboard and salary insight API for the average salary and total employee and filters for the employee to sort and search do that part now and make sure to update the prompt file and sync it throught project developement
+
+### Employee search and sorting
+
+> dashboard apis are also working fine now i want you to complete the part of searching and sorting for the employee data so let's dive it that part and create it

@@ -38,11 +38,21 @@ class MemoryEmployeeRepository implements EmployeeRepository {
     if (query.status) data = data.filter((row) => row.status === query.status);
     if (query.country) data = data.filter((row) => row.country.toLowerCase() === query.country.toLowerCase());
     if (query.department) data = data.filter((row) => row.department.toLowerCase() === query.department.toLowerCase());
+    if (query.currency) data = data.filter((row) => row.currency === query.currency);
     if (query.search) {
-      const term = query.search.toLowerCase();
-      data = data.filter((row) => [row.employeeCode, row.firstName, row.lastName, row.email].some((value) => value.toLowerCase().includes(term)));
+      const terms = query.search.toLowerCase().split(/\s+/);
+      data = data.filter((row) => terms.every((term) => [row.employeeCode, row.firstName, row.lastName, row.email].some((value) => value.toLowerCase().includes(term))));
     }
-    data.sort((a, b) => String(a[query.sortBy]).localeCompare(String(b[query.sortBy])) * (query.sortOrder === 'asc' ? 1 : -1));
+    data.sort((a, b) => {
+      const left = a[query.sortBy];
+      const right = b[query.sortBy];
+      const comparison = left instanceof Prisma.Decimal && right instanceof Prisma.Decimal
+        ? left.comparedTo(right)
+        : left instanceof Date && right instanceof Date
+          ? left.getTime() - right.getTime()
+          : String(left).localeCompare(String(right));
+      return comparison * (query.sortOrder === 'asc' ? 1 : -1);
+    });
     const total = data.length;
     return { data: data.slice((query.page - 1) * query.pageSize, query.page * query.pageSize), total };
   }
@@ -119,6 +129,26 @@ describe('Employee API', () => {
     expect(response.body.data).toHaveLength(1);
     expect(response.body.data[0].employeeCode).toBe('EMP-1003');
     expect(response.body.pagination).toEqual({ page: 1, pageSize: 1, total: 1, totalPages: 1 });
+  });
+
+  it('supports multi-word search, currency filtering, and numeric salary sorting', async () => {
+    const app = createApp(new EmployeeService(new MemoryEmployeeRepository([
+      employee({ firstName: 'Asha', lastName: 'Sharma', currency: 'INR', salary: new Prisma.Decimal(900000) }),
+      employee({ id: '54cab4a7-8efb-4c9c-847f-43ca26891757', employeeCode: 'EMP-1005', firstName: 'Asha', lastName: 'Sharma', currency: 'INR', salary: new Prisma.Decimal(1200000) }),
+      employee({ id: '7287334f-678d-4342-a0a6-b849fb415d7a', employeeCode: 'EMP-1006', firstName: 'Asha', lastName: 'Smith', currency: 'USD', salary: new Prisma.Decimal(200000) }),
+    ])));
+    const response = await request(app)
+      .get('/api/v1/employees')
+      .query({ search: 'Asha Sharma', currency: 'INR', sortBy: 'salary', sortOrder: 'desc' });
+
+    expect(response.status).toBe(200);
+    expect(response.body.data.map((row: { employeeCode: string }) => row.employeeCode)).toEqual(['EMP-1005', 'EMP-1001']);
+  });
+
+  it('rejects unsupported sort fields', async () => {
+    const response = await request(app).get('/api/v1/employees').query({ sortBy: 'invalidField' });
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe('Validation failed.');
   });
 
   it('validates input and updates a salary through its dedicated endpoint', async () => {
