@@ -41,5 +41,6 @@ salary-management/
 - The deterministic `prisma/seed.ts` script creates 10,000 idempotent sample employees across five countries and departments in batches of 1,000. It also creates each employee's initial salary-history entry and never deletes existing records.
 - Dashboard endpoints are isolated in `src/modules/dashboard`. Salary averages are grouped by currency instead of being combined across currencies, which avoids presenting a misleading cross-currency average; the same country, department, currency, and status filters can refine dashboard results.
 - Employee search accepts one or more terms across employee code, first name, last name, and email. Employee lists can be filtered by country, department, currency, and status; sortable fields are explicitly allowlisted and have a stable ID tie-breaker so pagination remains consistent.
+- The dashboard frontend loads the employee dataset once (up to the assessment scale of 10,000 records) and performs table search, filtering, sorting, and pagination in memory. This avoids repeated API requests as an HR Manager adjusts table controls; dashboard summaries and salary insights load once on entry.
 
 Employee Management is the only implemented product feature at this stage.

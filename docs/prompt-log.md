@@ -70,3 +70,7 @@ This document records the substantive user prompts for the current development s
 ### Employee search and sorting
 
 > dashboard apis are also working fine now i want you to complete the part of searching and sorting for the employee data so let's dive it that part and create it
+
+### Frontend dashboard and employee table
+
+> where have you done these filtering and sorting part i want it to be done in the frontend part as it will hit the API whenever a filter is applied which will reduce the perfomance so keep it int he frontend part and lets start with the frontend part of dashboard and employee table
