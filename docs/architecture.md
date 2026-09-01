@@ -39,5 +39,6 @@ salary-management/
 - Salaries are stored as `Decimal(12,2)` with a three-letter currency code. Each creation and salary update creates a salary-history record, preserving an audit trail without adding a broader payroll feature.
 - The Employee Management API is versioned under `/api/v1/employees`. Listing supports paginated, searchable, filterable, and sortable results; a dedicated salary endpoint prevents salary changes from being mixed with ordinary profile edits.
 - The deterministic `prisma/seed.ts` script creates 10,000 idempotent sample employees across five countries and departments in batches of 1,000. It also creates each employee's initial salary-history entry and never deletes existing records.
+- Dashboard endpoints are isolated in `src/modules/dashboard`. Salary averages are grouped by currency instead of being combined across currencies, which avoids presenting a misleading cross-currency average; the same country, department, currency, and status filters can refine dashboard results.
 
 Employee Management is the only implemented product feature at this stage.

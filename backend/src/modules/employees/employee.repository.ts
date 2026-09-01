@@ -20,6 +20,7 @@ export interface EmployeeRepository {
 export const buildEmployeeWhere = (query: EmployeeQuery): Prisma.EmployeeWhereInput => ({
   ...(query.country ? { country: { equals: query.country, mode: 'insensitive' } } : {}),
   ...(query.department ? { department: { equals: query.department, mode: 'insensitive' } } : {}),
+  ...(query.currency ? { currency: query.currency } : {}),
   ...(query.status ? { status: query.status as EmployeeStatus } : {}),
   ...(query.search
     ? {

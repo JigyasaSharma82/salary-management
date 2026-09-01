@@ -62,3 +62,7 @@ This document records the substantive user prompts for the current development s
 ### Database seeding
 
 > update the prompt document and now i want you to seed the database with 10000 records of employee in the employee table
+
+### Dashboard and salary insights API
+
+> ok all the APIs are working fine now i want you to create the dashboard and salary insight API for the average salary and total employee and filters for the employee to sort and search do that part now and make sure to update the prompt file and sync it throught project developement

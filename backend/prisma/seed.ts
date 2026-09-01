@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { EmployeeStatus, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
