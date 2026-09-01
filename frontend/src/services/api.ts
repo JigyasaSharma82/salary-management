@@ -29,14 +29,28 @@ export type CreateEmployeeInput = {
   salary: number;
 };
 
+export type UpdateEmployeeInput = Omit<CreateEmployeeInput, 'employeeCode' | 'salary'>;
+export type DashboardFilters = Pick<EmployeeFilters, 'country' | 'department' | 'currency' | 'status'>;
+
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:4000/api/v1';
+
+const queryString = (filters: Record<string, string | undefined>) => {
+  const params = new URLSearchParams();
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value) params.set(key, value);
+  });
+  return params.toString();
+};
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const response = await fetch(`${apiBaseUrl}${path}`, {
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     ...options,
   });
-  if (!response.ok) throw new Error(`Request failed (${response.status}).`);
+  if (!response.ok) {
+    const body = await response.json().catch(() => null) as { message?: string; error?: string } | null;
+    throw new Error(body?.message ?? body?.error ?? `Request failed (${response.status}).`);
+  }
   return response.json() as Promise<T>;
 }
 
@@ -53,6 +67,17 @@ export const api = {
     method: 'POST',
     body: JSON.stringify(employee),
   }),
-  dashboardSummary: () => request<{ data: DashboardSummary }>('/dashboard/summary'),
-  salaryInsights: () => request<{ data: { totalEmployees: number; averageSalaryByCurrency: SalaryInsight[] } }>('/dashboard/salary-insights'),
+  getEmployee: (id: string) => request<{ data: Employee }>(`/employees/${id}`),
+  updateEmployee: (id: string, employee: Partial<UpdateEmployeeInput>) => request<{ data: Employee }>(`/employees/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(employee),
+  }),
+  updateSalary: (id: string, salary: number) => request<{ data: Employee }>(`/employees/${id}/salary`, {
+    method: 'PATCH',
+    body: JSON.stringify({ salary }),
+  }),
+  deactivateEmployee: (id: string) => request<{ data: Employee }>(`/employees/${id}/deactivate`, { method: 'PATCH' }),
+  deleteEmployee: (id: string) => request<{ data: Employee }>(`/employees/${id}`, { method: 'DELETE' }),
+  dashboardSummary: (filters: DashboardFilters = {}) => request<{ data: DashboardSummary }>(`/dashboard/summary?${queryString(filters)}`),
+  salaryInsights: (filters: DashboardFilters = {}) => request<{ data: { totalEmployees: number; averageSalaryByCurrency: SalaryInsight[] } }>(`/dashboard/salary-insights?${queryString(filters)}`),
 };

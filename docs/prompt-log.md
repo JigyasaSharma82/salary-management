@@ -90,3 +90,9 @@ This document records the substantive user prompts for the current development s
 ### Filter API for employee table
 
 >now i want that apply filter should be there which will hit the api and should get the filtered data according to the applied filter which will improve the frontend performance
+
+### Employee creation UI and complete frontend API integration
+
+> there is no create button to add employee apply that to in UI and also integrate the POST / api for that creation feature
+
+> now i want to you to update the prompt docs accoring to the prompts i gave to you and apply frontend integration for all the API I created in the backend that is update status, update emplyee data CRUD operation and summary and slary insights api too
