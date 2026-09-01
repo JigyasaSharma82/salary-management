@@ -38,5 +38,6 @@ salary-management/
 - Employee records use a stable UUID and unique employee code and email. An employee is deactivated rather than permanently deleted so salary records are retained.
 - Salaries are stored as `Decimal(12,2)` with a three-letter currency code. Each creation and salary update creates a salary-history record, preserving an audit trail without adding a broader payroll feature.
 - The Employee Management API is versioned under `/api/v1/employees`. Listing supports paginated, searchable, filterable, and sortable results; a dedicated salary endpoint prevents salary changes from being mixed with ordinary profile edits.
+- The deterministic `prisma/seed.ts` script creates 10,000 idempotent sample employees across five countries and departments in batches of 1,000. It also creates each employee's initial salary-history entry and never deletes existing records.
 
-No frontend or backend features, APIs, database schema, or runtime configuration have been implemented at this stage.
+Employee Management is the only implemented product feature at this stage.

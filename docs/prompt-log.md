@@ -58,3 +58,7 @@ This document records the substantive user prompts for the current development s
 ### Employee Management backend
 
 > The requirements, architecture, and folder structure are ready. Now let's build the features one by one, starting with the backend. Implement the first feature: Employee Management. Build it completely with the database model, CRUD operations, pagination, search, filtering, sorting, salary update, deactivation, validation, error handling, and meaningful unit tests. Use our existing React + Node.js + Express.js + PostgreSQL + Prisma + TypeScript stack. Make sure the complete flow works with the database, test everything, and commit the changes. Don't start the next feature until this one is fully completed and verified.
+
+### Database seeding
+
+> update the prompt document and now i want you to seed the database with 10000 records of employee in the employee table

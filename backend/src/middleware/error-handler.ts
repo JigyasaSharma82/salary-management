@@ -26,5 +26,5 @@ export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
     return res.status(error.statusCode).json({ error: error.message });
   }
 
-  return res.status(500).json({ error: 'An unexpected error occurred.' });
+  return res.status(500).json({ error: error instanceof Error ? error.message : 'Internal Server Error' });
 };
