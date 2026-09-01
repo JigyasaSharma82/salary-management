@@ -96,3 +96,14 @@ This document records the substantive user prompts for the current development s
 > there is no create button to add employee apply that to in UI and also integrate the POST / api for that creation feature
 
 > now i want to you to update the prompt docs accoring to the prompts i gave to you and apply frontend integration for all the API I created in the backend that is update status, update emplyee data CRUD operation and summary and slary insights api too
+
+### Visible add and update form actions
+
+> when i fill the form of add employe it is not showing  add employe button  so you just need to fix it when i fill the form i want a add button to submit a form or add employe
+
+> in the update form or add employee form there is no submit or add button which will update or add the data so do that stuff and should call the respective API
+
+### Clear employee filters
+
+> apply a clear filter button too which will remove all the filter and give the complete employee data
+

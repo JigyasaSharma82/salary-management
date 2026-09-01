@@ -36,6 +36,14 @@ export function EmployeeTable({ employees, filterOptions, pagination, loading, o
   const [editEmployee, setEditEmployee] = useState<CreateEmployeeInput>(emptyEmployee);
   const [editing, setEditing] = useState(false);
   const applyFilters = () => onApplyFilters({ search: search.trim(), country, department, currency, status, page: 1, pageSize: PAGE_SIZE, sortBy: sort.key, sortOrder: sort.direction });
+  const clearFilters = () => {
+    setSearch('');
+    setCountry('');
+    setDepartment('');
+    setCurrency('');
+    setStatus('');
+    onApplyFilters({ search: '', country: '', department: '', currency: '', status: '', page: 1, pageSize: PAGE_SIZE, sortBy: sort.key, sortOrder: sort.direction });
+  };
   const toggleSort = (key: SortKey) => {
     const direction = sort.key === key && sort.direction === 'asc' ? 'desc' : 'asc';
     setSort({ key, direction });
@@ -95,7 +103,7 @@ export function EmployeeTable({ employees, filterOptions, pagination, loading, o
         <select aria-label="Filter by department" value={department} onChange={(event) => setDepartment(event.target.value)}><option value="">All departments</option>{filterOptions.departments.map((value) => <option key={value}>{value}</option>)}</select>
         <select aria-label="Filter by currency" value={currency} onChange={(event) => setCurrency(event.target.value)}><option value="">All currencies</option>{filterOptions.currencies.map((value) => <option key={value}>{value}</option>)}</select>
         <select aria-label="Filter by status" value={status} onChange={(event) => setStatus(event.target.value as EmployeeStatus | '')}><option value="">All statuses</option><option value="ACTIVE">Active</option><option value="INACTIVE">Inactive</option></select>
-        <button className="apply-filters" type="button" onClick={applyFilters} disabled={loading}>Apply filters</button>
+        <button className="apply-filters" type="button" onClick={applyFilters} disabled={loading}>Apply filters</button><button className="clear-filters" type="button" onClick={clearFilters} disabled={loading}>Clear filters</button>
       </div>
       {showCreateForm && <div className="modal-backdrop" role="presentation"><div className="create-modal" role="dialog" aria-modal="true" aria-labelledby="create-employee-title">
         <div className="modal-heading"><div><p className="eyebrow">Employee data</p><h2 id="create-employee-title">Add employee</h2></div><button className="close-modal" type="button" aria-label="Close form" onClick={() => setShowCreateForm(false)}>×</button></div>
