@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import { Dashboard } from './features/dashboard/Dashboard';
 import { EmployeeTable } from './features/employees/EmployeeTable';
 import { api, type EmployeeFilters, type EmployeeListResponse } from './services/api';
-import type { DashboardSummary, Employee, SalaryInsight } from './types/employee';
+import type { DashboardSummary, SalaryInsight } from './types/employee';
 
 export default function App() {
-  const [employees, setEmployees] = useState<Employee[]>([]);
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [insights, setInsights] = useState<SalaryInsight[]>([]);
   const [employeeResponse, setEmployeeResponse] = useState<EmployeeListResponse>({ data: [], pagination: { page: 1, pageSize: 30, total: 0, totalPages: 1 } });
