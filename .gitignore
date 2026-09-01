@@ -1,0 +1,9 @@
+# Dependencies and generated files
+**/node_modules/
+**/dist/
+
+# Local environment configuration
+**/.env
+
+# Test output
+**/coverage/

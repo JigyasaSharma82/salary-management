@@ -33,4 +33,10 @@ salary-management/
 - **Database:** PostgreSQL is the system of record for employee and salary data. Database modelling and migrations will be managed through Prisma when implementation begins.
 - **Documentation:** `docs/requirements.md` records the product scope. This file records the proposed structure and will be updated whenever an important architectural or design decision is made. `docs/prompt-log.md` records the substantive user prompts from this development session in chronological order.
 
+## Employee Management decisions
+
+- Employee records use a stable UUID and unique employee code and email. An employee is deactivated rather than permanently deleted so salary records are retained.
+- Salaries are stored as `Decimal(12,2)` with a three-letter currency code. Each creation and salary update creates a salary-history record, preserving an audit trail without adding a broader payroll feature.
+- The Employee Management API is versioned under `/api/v1/employees`. Listing supports paginated, searchable, filterable, and sortable results; a dedicated salary endpoint prevents salary changes from being mixed with ordinary profile edits.
+
 No frontend or backend features, APIs, database schema, or runtime configuration have been implemented at this stage.
