@@ -44,5 +44,6 @@ salary-management/
 - The dashboard frontend loads the employee dataset once (up to the assessment scale of 10,000 records) and performs table search, filtering, sorting, and pagination in memory. This avoids repeated API requests as an HR Manager adjusts table controls; dashboard summaries and salary insights load once on entry.
 - The employee table presents 30 records per page and owns its vertical and horizontal scrolling, while the dashboard shell remains fixed. Sticky table headers preserve column context during employee-table scrolling.
 - The employee table reserves space for at least eight compact rows before its internal scroll area is used at standard desktop zoom.
+- The overall page scrolls through the dashboard and employee controls. The employee table has a fixed eight-row viewport and takes over vertical scrolling when the pointer is within the table.
 
 Employee Management is the only implemented product feature at this stage.

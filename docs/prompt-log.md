@@ -82,3 +82,7 @@ This document records the substantive user prompts for the current development s
 ### Employee table visible rows
 
 > see it is not showing any employee record at current when its 100% zoomed i want that it should show atleast 8 records then scrolling will be enables
+
+### Page and table scrolling
+
+> make the page scrollable till that 8 records then the employee component should scroll whenever user scrolls down update it
