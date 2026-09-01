@@ -7,6 +7,7 @@ export const employeeRouter = (service: EmployeeService) => {
   const router = Router();
 
   router.get('/', controller.list);
+  router.get('/filter-options', controller.filterOptions);
   router.post('/', controller.create);
   router.get('/:id', controller.getById);
   router.patch('/:id', controller.update);

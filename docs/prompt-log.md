@@ -86,3 +86,7 @@ This document records the substantive user prompts for the current development s
 ### Page and table scrolling
 
 > make the page scrollable till that 8 records then the employee component should scroll whenever user scrolls down update it
+
+### Filter API for employee table
+
+>now i want that apply filter should be there which will hit the api and should get the filtered data according to the applied filter which will improve the frontend performance

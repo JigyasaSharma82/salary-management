@@ -28,6 +28,10 @@ export const employeeController = (service: EmployeeService) => ({
     });
   }),
 
+  filterOptions: asyncHandler(async (_req, res) => {
+    res.status(200).json({ data: await service.filterOptions() });
+  }),
+
   getById: asyncHandler(async (req, res) => {
     const employee = await service.getById(idSchema.parse(req.params.id));
     res.status(200).json({ data: employee });

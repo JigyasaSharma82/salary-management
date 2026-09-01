@@ -1,13 +1,17 @@
 import { Prisma } from '@prisma/client';
 import { AppError } from '../../middleware/error-handler.js';
 import type { CreateEmployeeInput, EmployeeQuery, UpdateEmployeeInput } from './employee.schemas.js';
-import type { EmployeeRepository } from './employee.repository.js';
+import type { EmployeeFilterOptions, EmployeeRepository } from './employee.repository.js';
 
 export class EmployeeService {
   constructor(private readonly repository: EmployeeRepository) {}
 
   list(query: EmployeeQuery) {
     return this.repository.list(query);
+  }
+
+  filterOptions(): Promise<EmployeeFilterOptions> {
+    return this.repository.filterOptions?.() ?? Promise.resolve({ countries: [], departments: [], currencies: [] });
   }
 
   async getById(id: string) {

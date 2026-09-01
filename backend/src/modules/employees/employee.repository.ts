@@ -7,9 +7,11 @@ import {
 import type { CreateEmployeeInput, EmployeeQuery, UpdateEmployeeInput } from './employee.schemas.js';
 
 export type EmployeeList = { data: Employee[]; total: number };
+export type EmployeeFilterOptions = { countries: string[]; departments: string[]; currencies: string[] };
 
 export interface EmployeeRepository {
   list(query: EmployeeQuery): Promise<EmployeeList>;
+  filterOptions?(): Promise<EmployeeFilterOptions>;
   findById(id: string): Promise<Employee | null>;
   create(data: CreateEmployeeInput): Promise<Employee>;
   update(id: string, data: UpdateEmployeeInput): Promise<Employee | null>;
@@ -49,6 +51,19 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
       this.db.employee.count({ where }),
     ]);
     return { data, total };
+  }
+
+  async filterOptions(): Promise<EmployeeFilterOptions> {
+    const [countries, departments, currencies] = await Promise.all([
+      this.db.employee.findMany({ distinct: ['country'], select: { country: true }, orderBy: { country: 'asc' } }),
+      this.db.employee.findMany({ distinct: ['department'], select: { department: true }, orderBy: { department: 'asc' } }),
+      this.db.employee.findMany({ distinct: ['currency'], select: { currency: true }, orderBy: { currency: 'asc' } }),
+    ]);
+    return {
+      countries: countries.map(({ country }) => country),
+      departments: departments.map(({ department }) => department),
+      currencies: currencies.map(({ currency }) => currency),
+    };
   }
 
   findById(id: string) {
