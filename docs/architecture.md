@@ -33,6 +33,13 @@ salary-management/
 - **Database:** PostgreSQL is the system of record for employee and salary data. Database modelling and migrations will be managed through Prisma when implementation begins.
 - **Documentation:** `docs/requirements.md` records the product scope. This file records the proposed structure and will be updated whenever an important architectural or design decision is made. `docs/prompt-log.md` records the substantive user prompts from this development session in chronological order.
 
+## Deployment configuration
+
+- The backend deployment service must use `backend` as its root directory so its `package.json` and `package-lock.json` are installed.
+- Backend build command: `npm ci && npm run build`.
+- Backend start command: `npm start`.
+- The deployment environment must provide a PostgreSQL `DATABASE_URL` and a runtime `PORT`; local `.env` values are not used in deployment.
+
 ## Employee Management decisions
 
 - Employee records use a stable UUID and unique employee code and email. An employee is deactivated rather than permanently deleted so salary records are retained.
